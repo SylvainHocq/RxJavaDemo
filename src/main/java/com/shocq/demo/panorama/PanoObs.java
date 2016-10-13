@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 public class PanoObs {
 
-    public static Observable<Stack<File>> createObs(String adsFileName) {
+    public static Observable<Stack<File>> createObs(String adsFileName, long gap) {
         Func2<ArrayList<File>, ArrayList<File>, ArrayList<File>> init = null;
         File root = new File(adsFileName);
         return DirecyoryObs
@@ -32,7 +32,7 @@ public class PanoObs {
                     File file1 = filesStack1.lastElement();
                     File file2 = filesStack2.get(0);
                     long diff = getDiff(file1, file2);
-                    if (diff < TimeUnit.SECONDS.toMillis(6)) {
+                    if (diff < gap) {
                         ret = filesStack1;
                         ret.push(file2);
                     } else {
@@ -41,14 +41,15 @@ public class PanoObs {
                     return ret;
                 })
                 .filter(files -> files.size() > 1)
-                .doOnNext(files -> {
-                    String name = files.get(0).getName();
-                    name = name.substring(0, name.indexOf("."));
-                    String name1 = files.lastElement().getName();
-                    name1 = name1.substring(0, name1.indexOf("."));
-                    String directoryName = name +"_"+name1;
-                    File directory = new File(files.get(0).getParentFile(), directoryName);
-                })
+//                .doOnNext(files -> {
+//                    String name = files.get(0).getName();
+//                    name = name.substring(0, name.indexOf("."));
+//                    String name1 = files.lastElement().getName();
+//                    name1 = name1.substring(0, name1.indexOf("."));
+//                    String directoryName = name +"_"+name1;
+//                    File directory = new File(files.get(0).getParentFile(), directoryName);
+//                    System.out.println(directory);
+//                })
 
                 ;
 

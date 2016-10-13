@@ -23,12 +23,13 @@ public class PanoramaCmd {
             System.exit(0);
         }
         PanoObs
-                .createObs(options.directory)
+                .createObs(options.directory, options.gap)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(Schedulers.immediate())
                 .subscribe(new Observer<Stack<File>>() {
                     @Override
                     public void onCompleted() {
+                        System.out.println("DONE");
                         System.exit(0);
                     }
 

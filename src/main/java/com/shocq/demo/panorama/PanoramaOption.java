@@ -14,4 +14,8 @@ public class PanoramaOption {
 
     @Option(name = "-d", aliases = {"--directoty"}, usage = "directory")
     public String directory;
+
+    @Option(name = "-g", aliases = {"--gap"}, usage = "gap beetween date file in milliseconds")
+    public long gap = 6000;
+
 }
